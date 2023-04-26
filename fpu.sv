@@ -177,6 +177,16 @@ interface fpu;
     end
   endfunction
 
+  function automatic logic [N - 1: 0] neg;
+    input logic [N - 1: 0] v;
+
+    `IEEE754(NX, NM) pv = v;
+
+    begin
+      neg = {~pv.sign, pv.exp, pv.mant};
+    end
+  endfunction
+
   function automatic logic [N - 1: 0] add;
     input logic [N - 1: 0] v1;
     input logic [N - 1: 0] v2;
