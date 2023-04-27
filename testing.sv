@@ -1,5 +1,10 @@
 /* verilator lint_off WIDTH */
 
+`ifndef SEED
+ `define SEED 17
+`endif
+
+
 module conv_test;
   parameter integer NX = 8;
   parameter integer NM = 23;
@@ -11,13 +16,13 @@ module conv_test;
 
   logic [NX + NM: 0] ff, vff;
 
-  integer              i;
+  integer              i, seed = `SEED;
   real                 rv, xrv;
 
   initial
     begin
       for (i = 0; i < N; i = i + 1) begin
-        rv = fu.rand_real() * K;
+        rv = fu.rand_real(seed) * K;
 
         ff = fu.from_real(rv);
         xrv = fu.to_real(ff);
@@ -54,13 +59,13 @@ module fp_conv_test;
   logic [INX + INM: 0] ff1, xff1;
   logic [NX + NM: 0] off1;
 
-  integer              i;
+  integer              i, seed = `SEED;
   real                 rv, xrv;
 
   initial
     begin
       for (i = 0; i < N; i = i + 1) begin
-        rv = fu1.rand_real() * K;
+        rv = fu1.rand_real(seed) * K;
 
         ff1 = fu1.from_real(rv);
         off1 = f1.convert(ff1);
@@ -90,13 +95,13 @@ module to_integer_test;
 
   logic [NX + NM: 0] ff, ffi, irv;
 
-  integer              i;
+  integer              i, seed = `SEED;
   real                 rv;
 
   initial
     begin
       for (i = 0; i < N; i = i + 1) begin
-        rv = fu.rand_real() * K;
+        rv = fu.rand_real(seed) * K;
 
         ff = fu.from_real(rv);
         ffi = f.to_integer(ff);
@@ -166,14 +171,14 @@ module add_test;
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 
-  integer              i;
+  integer              i, seed = `SEED;
   real                 rv1, rv2, rrv;
 
   initial
     begin
       for (i = 0; i < N; i = i + 1) begin
-        rv1 = fu.rand_real() * K;
-        rv2 = fu.rand_real() * K;
+        rv1 = fu.rand_real(seed) * K;
+        rv2 = fu.rand_real(seed) * K;
 
         ff1 = fu.from_real(rv1);
         ff2 = fu.from_real(rv2);
@@ -207,14 +212,14 @@ module sub_test;
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 
-  integer              i;
+  integer              i, seed = `SEED;
   real                 rv1, rv2, rrv;
 
   initial
     begin
       for (i = 0; i < N; i = i + 1) begin
-        rv1 = fu.rand_real() * K;
-        rv2 = fu.rand_real() * K;
+        rv1 = fu.rand_real(seed) * K;
+        rv2 = fu.rand_real(seed) * K;
 
         ff1 = fu.from_real(rv1);
         ff2 = fu.from_real(rv2);
@@ -248,14 +253,14 @@ module mul_test;
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 
-  integer              i;
+  integer              i, seed = `SEED;
   real                 rv1, rv2, rrv;
 
   initial
     begin
       for (i = 0; i < N; i = i + 1) begin
-        rv1 = fu.rand_real() * K;
-        rv2 = fu.rand_real() * K;
+        rv1 = fu.rand_real(seed) * K;
+        rv2 = fu.rand_real(seed) * K;
 
         ff1 = fu.from_real(rv1);
         ff2 = fu.from_real(rv2);
@@ -289,15 +294,15 @@ module div_test;
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 
-  integer              i;
+  integer              i, seed = `SEED;
   real                 rv1, rv2, rrv;
 
   initial
     begin
       for (i = 0; i < N; i = i + 1) begin
-        rv1 = fu.rand_real() * K;
+        rv1 = fu.rand_real(seed) * K;
         do begin
-          rv2 = fu.rand_real() * K;
+          rv2 = fu.rand_real(seed) * K;
         end while (`FABS(rv2) < 1e-5);
 
         ff1 = fu.from_real(rv1);
@@ -363,6 +368,7 @@ module main;
 
   initial
     begin
+      $display("SEED = %6d", `SEED);
       $finish;
     end
 endmodule

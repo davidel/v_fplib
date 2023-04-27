@@ -69,8 +69,10 @@ interface fp_utils;
   endfunction
 
   function automatic real rand_real;
+    inout integer seed;
+
     begin
-      rand_real = $itor($random) / $pow(2.0, 31);
+      rand_real = $itor($random(seed)) / $pow(2.0, 31);
     end
   endfunction
 
