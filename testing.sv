@@ -303,7 +303,7 @@ module div_test;
         rv1 = fu.rand_real(seed) * K;
         do begin
           rv2 = fu.rand_real(seed) * K;
-        end while (`FABS(rv2) < 1e-5);
+        end while (FABS(rv2) < 1e-5);
 
         ff1 = fu.from_real(rv1);
         ff2 = fu.from_real(rv2);
