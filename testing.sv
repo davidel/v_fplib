@@ -41,8 +41,9 @@ module conv_test;
         vff = fu.from_real(xrv);
 
         if (!fu.icloseto(ff, vff)) begin
-          fu.show_real("[conv_test] BAD = ", xrv);
-          fu.show_real("[conv_test] OK  = ", rv);
+          $display("TEST[conv_test] %f vs. %f", xrv, rv);
+          fu.show_real("  BAD = ", xrv);
+          fu.show_real("  OK  = ", rv);
 
           $finish(1);
         end
@@ -85,8 +86,9 @@ module fp_conv_test;
 
         if (ff1 != xff1) begin
           xrv = fu1.to_real(xff1);
-          fu1.show_real("[fp_conv_test] BAD = ", xrv);
-          fu1.show_real("[fp_conv_test] OK  = ", rv);
+          $display("TEST[conv_test] %f vs. %f", xrv, rv);
+          fu1.show_real("  BAD = ", xrv);
+          fu1.show_real("  OK  = ", rv);
           $finish(1);
         end
       end
@@ -121,9 +123,9 @@ module to_integer_test;
         irv = (1 + NX + NM)'($rtoi(rv));
 
         if (ffi != irv) begin
-          $display("[to_integer_test] %d != %d", ffi, irv);
-          $display("  ffi = %b", ffi);
-          $display("  irv = %b", irv);
+          $display("TEST[to_integer_test] %d vs. %d", ffi, irv);
+          $display("  BAD = %b", ffi);
+          $display("  OK  = %b", irv);
           $finish(1);
         end
       end
@@ -137,7 +139,7 @@ module from_integer_test;
   parameter integer NX = 8;
   parameter integer NM = 23;
   parameter integer N = 5000;
-  parameter integer K = 2**(NM - 3);
+  parameter integer K = 2**(fp::MIN(NM, 24) - 3);
 
   localparam integer NB = 1 + NX + NM;
 
@@ -160,9 +162,9 @@ module from_integer_test;
         irv = $rtoi(fu.to_real(ffi));
 
         if (iv != irv) begin
-          $display("[from_integer_test] %d != %d", iv, irv);
-          $display("  iv  = %b", iv);
-          $display("  irv = %b", irv);
+          $display("TEST[from_integer_test] %d vs. %d", irv, iv);
+          $display("  BAD = %b", irv);
+          $display("  OK  = %b", iv);
           $finish(1);
         end
       end
@@ -201,9 +203,9 @@ module add_test;
         rrv = fu.to_real(ff);
 
         if (!fu.icloseto(ff, vff)) begin
-          $display("OP = %f + %f", rv1, rv2);
-          fu.show_real("BAD = ", rrv);
-          fu.show_real("OK  = ", rv1 + rv2);
+          $display("TEST[add] = %f + %f", rv1, rv2);
+          fu.show_real("  BAD = ", rrv);
+          fu.show_real("  OK  = ", rv1 + rv2);
           $finish(1);
         end
       end
@@ -242,9 +244,9 @@ module sub_test;
         rrv = fu.to_real(ff);
 
         if (!fu.icloseto(ff, vff)) begin
-          $display("OP = %f - %f", rv1, rv2);
-          fu.show_real("BAD = ", rrv);
-          fu.show_real("OK  = ", rv1 - rv2);
+          $display("TEST[sub] = %f - %f", rv1, rv2);
+          fu.show_real("  BAD = ", rrv);
+          fu.show_real("  OK  = ", rv1 - rv2);
           $finish(1);
         end
       end
@@ -283,9 +285,9 @@ module mul_test;
         rrv = fu.to_real(ff);
 
         if (!fu.icloseto(ff, vff)) begin
-          $display("OP = %f * %f", rv1, rv2);
-          fu.show_real("BAD = ", rrv);
-          fu.show_real("OK  = ", rv1 * rv2);
+          $display("TEST[mul] = %f * %f", rv1, rv2);
+          fu.show_real("  BAD = ", rrv);
+          fu.show_real("  OK  = ", rv1 * rv2);
           $finish(1);
         end
       end
@@ -326,9 +328,9 @@ module div_test;
         rrv = fu.to_real(ff);
 
         if (!fu.icloseto(ff, vff)) begin
-          $display("OP = %f / %f", rv1, rv2);
-          fu.show_real("BAD = ", rrv);
-          fu.show_real("OK  = ", rv1 / rv2);
+          $display("TEST[div] = %f / %f", rv1, rv2);
+          fu.show_real("  BAD = ", rrv);
+          fu.show_real("  OK  = ", rv1 / rv2);
           $finish(1);
         end
       end
