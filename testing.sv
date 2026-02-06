@@ -3,6 +3,18 @@
 `ifndef SEED
  `define SEED 17
 `endif
+`ifndef NX
+ `define NX 11
+`endif
+`ifndef NM
+ `define NM 52
+`endif
+`ifndef CLZ_N
+ `define CLZ_N 32
+`endif
+`ifndef TEST_N
+ `define TEST_N 100000
+`endif
 
 
 module conv_test;
@@ -29,8 +41,8 @@ module conv_test;
         vff = fu.from_real(xrv);
 
         if (!fu.icloseto(ff, vff)) begin
-          fu.show_real("BAD = ", xrv);
-          fu.show_real("OK  = ", rv);
+          fu.show_real("[conv_test] BAD = ", xrv);
+          fu.show_real("[conv_test] OK  = ", rv);
 
           $finish(1);
         end
@@ -73,8 +85,8 @@ module fp_conv_test;
 
         if (ff1 != xff1) begin
           xrv = fu1.to_real(xff1);
-          fu1.show_real("BAD = ", xrv);
-          fu1.show_real("OK  = ", rv);
+          fu1.show_real("[fp_conv_test] BAD = ", xrv);
+          fu1.show_real("[fp_conv_test] OK  = ", rv);
           $finish(1);
         end
       end
@@ -109,9 +121,9 @@ module to_integer_test;
         irv = (1 + NX + NM)'($rtoi(rv));
 
         if (ffi != irv) begin
-          $display("%d != %d", ffi, irv);
-          $display("  %b", ffi);
-          $display("  %b", irv);
+          $display("[to_integer_test] %d != %d", ffi, irv);
+          $display("  ffi = %b", ffi);
+          $display("  irv = %b", irv);
           $finish(1);
         end
       end
@@ -125,7 +137,7 @@ module from_integer_test;
   parameter integer NX = 8;
   parameter integer NM = 23;
   parameter integer N = 5000;
-  parameter integer K = 100000000;
+  parameter integer K = 2**(NM - 3);
 
   localparam integer NB = 1 + NX + NM;
 
@@ -133,7 +145,7 @@ module from_integer_test;
   fp_utils #(.NX (NX), .NM (NM)) fu();
 
   logic signed [NB - 1: 0] ff;
-  logic [N - 1: 0]        ffi;
+  logic [NB - 1: 0]        ffi;
 
   integer                 i, iv, irv;
 
@@ -148,7 +160,7 @@ module from_integer_test;
         irv = $rtoi(fu.to_real(ffi));
 
         if (iv != irv) begin
-          $display("%d != %d", iv, irv);
+          $display("[from_integer_test] %d != %d", iv, irv);
           $display("  iv  = %b", iv);
           $display("  irv = %b", irv);
           $finish(1);
@@ -350,14 +362,9 @@ module clz_test;
 endmodule
 
 
-`define NX 11
-`define NM 52
-`define CLZ_N 32
-`define TEST_N 100000
-
 module main;
-  conv_test #(.NX(`NX), .NM(`NM)) ct();
-  fp_conv_test #(.NX(`NX), .NM(`NM)) fct();
+  conv_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) ct();
+  fp_conv_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) fct();
   clz_test #(.CLZ_N(`CLZ_N)) cz();
   add_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) at();
   sub_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) st();
@@ -368,7 +375,10 @@ module main;
 
   initial
     begin
-      $display("SEED = %6d", `SEED);
+      $display("SEED = %-d", `SEED);
+      $display("NX = %-d", `NX);
+      $display("NM = %-d", `NM);
+      $display("CLZ_N = %-d", `CLZ_N);
       $finish;
     end
 endmodule
