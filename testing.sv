@@ -23,8 +23,8 @@ module conv_test;
   parameter integer N = 5000;
   parameter real    K = 10000.0;
 
-  fpu #(.NX (NX), .NM (NM)) f();
-  fp_utils #(.NX (NX), .NM (NM)) fu();
+  fpu #(.NX(NX), .NM(NM)) f();
+  fp_utils #(.NX(NX), .NM(NM)) fu();
 
   logic [NX + NM: 0] ff, vff;
 
@@ -63,11 +63,11 @@ module fp_conv_test;
   parameter integer INX = NX;
   parameter integer INM = NM;
 
-  fp_conv #(.INX (INX), .INM (INM), .ONX(NX), .ONM(NM)) f1();
-  fp_conv #(.INX (NX), .INM (NM), .ONX(INX), .ONM(INM)) f2();
+  fp_conv #(.NX(INX), .NM(INM), .ONX(NX), .ONM(NM)) f1();
+  fp_conv #(.NX(NX), .NM(NM), .ONX(INX), .ONM(INM)) f2();
 
-  fp_utils #(.NX (INX), .NM (INM)) fu1();
-  fp_utils #(.NX (NX), .NM (NM)) fu2();
+  fp_utils #(.NX(INX), .NM(INM)) fu1();
+  fp_utils #(.NX(NX), .NM(NM)) fu2();
 
   logic [INX + INM: 0] ff1, xff1;
   logic [NX + NM: 0] off1;
@@ -104,8 +104,8 @@ module to_integer_test;
   parameter integer N = 5000;
   parameter real    K = 10000.0;
 
-  fpu #(.NX (NX), .NM (NM)) f();
-  fp_utils #(.NX (NX), .NM (NM)) fu();
+  fpu #(.NX(NX), .NM(NM)) f();
+  fp_utils #(.NX(NX), .NM(NM)) fu();
 
   logic [NX + NM: 0] ff, ffi, irv;
 
@@ -143,8 +143,8 @@ module from_integer_test;
 
   localparam integer NB = 1 + NX + NM;
 
-  fpu #(.NX (NX), .NM (NM)) f();
-  fp_utils #(.NX (NX), .NM (NM)) fu();
+  fpu #(.NX(NX), .NM(NM)) f();
+  fp_utils #(.NX(NX), .NM(NM)) fu();
 
   logic signed [NB - 1: 0] ff;
   logic [NB - 1: 0]        ffi;
@@ -180,8 +180,8 @@ module add_test;
   parameter integer N = 5000;
   parameter real    K = 10000.0;
 
-  fpu #(.NX (NX), .NM (NM)) f();
-  fp_utils #(.NX (NX), .NM (NM)) fu();
+  fpu #(.NX(NX), .NM(NM)) f();
+  fp_utils #(.NX(NX), .NM(NM)) fu();
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 
@@ -221,8 +221,8 @@ module sub_test;
   parameter integer N = 5000;
   parameter real    K = 10000.0;
 
-  fpu #(.NX (NX), .NM (NM)) f();
-  fp_utils #(.NX (NX), .NM (NM)) fu();
+  fpu #(.NX(NX), .NM(NM)) f();
+  fp_utils #(.NX(NX), .NM(NM)) fu();
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 
@@ -262,8 +262,8 @@ module mul_test;
   parameter integer N = 5000;
   parameter real    K = 10000.0;
 
-  fpu #(.NX (NX), .NM (NM)) f();
-  fp_utils #(.NX (NX), .NM (NM)) fu();
+  fpu #(.NX(NX), .NM(NM)) f();
+  fp_utils #(.NX(NX), .NM(NM)) fu();
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 
@@ -303,8 +303,8 @@ module div_test;
   parameter integer N = 5000;
   parameter real    K = 10000.0;
 
-  fpu #(.NX (NX), .NM (NM)) f();
-  fp_utils #(.NX (NX), .NM (NM)) fu();
+  fpu #(.NX(NX), .NM(NM)) f();
+  fp_utils #(.NX(NX), .NM(NM)) fu();
 
   logic [NX + NM: 0] ff1, ff2, ff, vff;
 

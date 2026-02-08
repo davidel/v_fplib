@@ -24,6 +24,7 @@ bin: $(SOURCES)
 	verilator \
 		-sv \
 		--binary \
+		--Mdir $(PWD) \
 		-DSEED=$(SEED) \
 		-DNX=$(NX) \
 		-DNM=$(NM) \
