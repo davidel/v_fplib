@@ -24,7 +24,7 @@ bin: $(SOURCES)
 	verilator \
 		-sv \
 		--binary \
-		--Mdir $(PWD) \
+		--Mdir $(PWD)/v_fpu_objs \
 		-DSEED=$(SEED) \
 		-DNX=$(NX) \
 		-DNM=$(NM) \
