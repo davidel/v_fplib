@@ -1,4 +1,7 @@
 
+OBJDIR ?= $(PWD)/v_fpu_objs
+SRCDIR ?= $(dir $(realpath $(lastword ${MAKEFILE_LIST})))
+
 SEED ?= 21
 NX ?= 11
 NM ?= 52
@@ -6,7 +9,12 @@ CLZ_N ?= 32
 TEST_N ?= 100000
 
 TOPM = main
-SOURCES = macros.sv fpu.sv fp_conv.sv fp_utils.sv testing.sv
+SOURCES = $(SRCDIR)/macros.sv \
+	$(SRCDIR)/fpu.sv \
+	$(SRCDIR)/fp_conv.sv \
+	$(SRCDIR)/fp_utils.sv \
+	$(SRCDIR)/testing.sv
+
 
 check: $(SOURCES)
 	verilator \
@@ -24,7 +32,7 @@ bin: $(SOURCES)
 	verilator \
 		-sv \
 		--binary \
-		--Mdir $(PWD)/v_fpu_objs \
+		--Mdir $(OBJDIR) \
 		-DSEED=$(SEED) \
 		-DNX=$(NX) \
 		-DNM=$(NM) \
@@ -34,8 +42,8 @@ bin: $(SOURCES)
 		$(SOURCES)
 
 run: bin
-	./obj_dir/V$(TOPM)
+	$(OBJDIR)/V$(TOPM)
 
 clean:
-	rm -rf obj_dir/
+	rm -rf $(OBJDIR)
 
