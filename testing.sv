@@ -377,6 +377,7 @@ module main;
 
   initial
     begin
+      $display("TEST_N = %-d", `TEST_N);
       $display("SEED = %-d", `SEED);
       $display("NX = %-d", `NX);
       $display("NM = %-d", `NM);
