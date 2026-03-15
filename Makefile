@@ -7,6 +7,7 @@ NX ?= 11
 NM ?= 52
 CLZ_N ?= 32
 TEST_N ?= 100000
+K_SCALE ?= 10000.0
 
 TOPM = main
 SOURCES = $(SRCDIR)/macros.sv \
@@ -25,6 +26,7 @@ check: $(SOURCES)
 		-DNM=$(NM) \
 		-DCLZ_N=$(CLZ_N) \
 		-DTEST_N=$(TEST_N) \
+		-DK_SCALE=$(K_SCALE) \
 		--top $(TOPM) \
 		$(SOURCES)
 
@@ -38,6 +40,7 @@ bin: $(SOURCES)
 		-DNM=$(NM) \
 		-DCLZ_N=$(CLZ_N) \
 		-DTEST_N=$(TEST_N) \
+		-DK_SCALE=$(K_SCALE) \
 		--top $(TOPM) \
 		$(SOURCES)
 

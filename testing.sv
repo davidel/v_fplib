@@ -15,6 +15,9 @@
 `ifndef TEST_N
  `define TEST_N 100000
 `endif
+`ifndef K_SCALE
+ `define K_SCALE 10000.0
+`endif
 
 
 module conv_test;
@@ -365,19 +368,20 @@ endmodule
 
 
 module main;
-  conv_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) ct();
-  fp_conv_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) fct();
+  conv_test #(.NX(`NX), .NM(`NM), .N(`TEST_N), .K(`K_SCALE)) ct();
+  fp_conv_test #(.NX(`NX), .NM(`NM), .N(`TEST_N), .K(`K_SCALE)) fct();
   clz_test #(.CLZ_N(`CLZ_N)) cz();
-  add_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) at();
-  sub_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) st();
-  mul_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) mt();
-  div_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) dt();
-  to_integer_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) tit();
+  add_test #(.NX(`NX), .NM(`NM), .N(`TEST_N), .K(`K_SCALE)) at();
+  sub_test #(.NX(`NX), .NM(`NM), .N(`TEST_N), .K(`K_SCALE)) st();
+  mul_test #(.NX(`NX), .NM(`NM), .N(`TEST_N), .K(`K_SCALE)) mt();
+  div_test #(.NX(`NX), .NM(`NM), .N(`TEST_N), .K(`K_SCALE)) dt();
+  to_integer_test #(.NX(`NX), .NM(`NM), .N(`TEST_N), .K(`K_SCALE)) tit();
   from_integer_test #(.NX(`NX), .NM(`NM), .N(`TEST_N)) fit();
 
   initial
     begin
       $display("TEST_N = %-d", `TEST_N);
+      $display("K_SCALE = %.1f", `K_SCALE);
       $display("SEED = %-d", `SEED);
       $display("NX = %-d", `NX);
       $display("NM = %-d", `NM);
